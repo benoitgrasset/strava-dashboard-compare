@@ -13,6 +13,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --orange: rgb(252 82 0);
+  --light-orange: rgb(255 140 132);
+  --green: rgb(54 197 151);
+  --blue: rgb(1 104 255);
+  --grey: rgb(247 247 250);
+  --white: rgb(255 255 255);
+  --yellow: rgb(255 255 0);
 }
 
 a {
@@ -26,10 +34,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
