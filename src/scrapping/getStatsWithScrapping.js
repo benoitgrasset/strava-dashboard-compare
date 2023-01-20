@@ -105,21 +105,16 @@ const getStatsWithScrapping = async (page, athletes) => {
     const data = await page.evaluate(async (sports) => {
       const roundNumber = (num) => Math.round(num * 100) / 100;
 
-      /**
-       * We keep only the number before the first letter "h" (number of hours) and convert it to number
-       * @param {*} str
-       * @returns
-       */
       const formatTime = (string) => {
         const timeDigits = string
           .split(/\D/)
           .filter((e) => e)
           .map((e) => Number(e));
         if (string.includes("h")) {
-          // HOUR MIN
+          // HOUR MIN ("7h 50min")
           return roundNumber(timeDigits[0] + timeDigits[1] / 60);
         } else {
-          // MIN SEC
+          // MIN SEC ("22min 27s")
           return roundNumber(timeDigits[0] / 60);
         }
       };
