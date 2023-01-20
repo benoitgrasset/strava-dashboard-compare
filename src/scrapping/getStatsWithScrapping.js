@@ -111,10 +111,16 @@ const getStatsWithScrapping = async (page, athletes) => {
        * @returns
        */
       const formatTime = (string) => {
+        const timeDigits = string
+          .split(/\D/)
+          .filter((e) => e)
+          .map((e) => Number(e));
         if (string.includes("h")) {
-          return Number(string.split(/\D/)[0]);
+          // HOUR MIN
+          return roundNumber(timeDigits[0] + timeDigits[1] / 60);
         } else {
-          return roundNumber(Number(string.split(/\D/)[0]) / 60);
+          // MIN SEC
+          return roundNumber(timeDigits[0] / 60);
         }
       };
 
