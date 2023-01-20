@@ -1,0 +1,45 @@
+name: Update dashboard by scrapping
+
+on:
+  schedule:
+    - cron: "0 0 */1 * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+      - name: Use Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+      - name: Install node dependencies (back)
+        run: npm ci
+
+      - name: Check if script exist
+        run: ls
+
+      - name: Set environment variables
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Update stats from Strava
+        timeout-minutes: 20
+        continue-on-error: true
+        run: node src/launchScrapping.js
+
+      - name: Commit and push
+        run: |
+          git diff
+          git config --global user.email "actions@users.noreply.github.com"
+          git config --global user.name "gh action bot"
+          git add -A
+          git commit -m "update stats"
+          git push
