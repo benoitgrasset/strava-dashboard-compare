@@ -6,6 +6,8 @@ Les données sont scrappées sur Strava avec `Puppeteer`.
 
 Mis à jour tous les jours à minuit via un [Github actions](https://github.com/benoitgrasset/strava-dashboard-compare/actions/workflows/update-dashboard.yml) et un `cron job`.
 
+Le fichier yml décrivant le workflow: [update-dashboard.yml](/.github/workflows/update-dashboard.yml)
+
 [cron-guru](https://crontab.guru/#*_*_*_*_*)
 
 Le dahboard est déployé avec `Netlify` sur l'url suivante: https://strava-dashboard-compare.netlify.app/
