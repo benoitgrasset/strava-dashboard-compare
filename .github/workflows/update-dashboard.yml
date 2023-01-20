@@ -33,7 +33,7 @@ jobs:
       - name: Update stats from Strava
         timeout-minutes: 20
         continue-on-error: true
-        run: node src/launchScrapping.js
+        run: node src/scrapping/launchScrapping.js
 
       - name: Commit and push
         run: |

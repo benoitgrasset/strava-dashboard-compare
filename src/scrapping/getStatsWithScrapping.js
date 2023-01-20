@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import puppeteer from "puppeteer";
-import { writeJSON } from "./database/index.js";
+import { writeJSON } from "./utils.js";
 
 const StravaURL = "https://www.strava.com/login/";
 
