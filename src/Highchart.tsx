@@ -1,8 +1,8 @@
 import Highcharts, { AxisLabelsFormatterContextObject } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React, { useRef, useState } from "react";
+import JSONStats from "../stats.json";
 import { NoData } from "./components/NoData";
-import JSONStats from "./data/stats.json";
 import "./style.css";
 import { DataType, SortBy, Stats } from "./types";
 import { blue, green, orange } from "./utils/common";
