@@ -103,7 +103,7 @@ const getStatsWithScrapping = async (page, athletes) => {
     // document variable is available within page.evaluate()
     // variable sports is not defined / accessible within evaluate()
     const data = await page.evaluate(async (sports) => {
-      const roundNumber = (num) => Math.round(num * 100) / 100;
+      const roundNumber = (num) => Math.round(num * 10) / 10;
 
       const formatTime = (string) => {
         const timeDigits = string
