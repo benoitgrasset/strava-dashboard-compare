@@ -160,10 +160,22 @@ const getStatsWithScrapping = async (page, athletes) => {
         "Ski nordique": "nordic_ski",
       };
 
-      const activity = sports.reduce((acc, sport, index) => {
-        if (sportsRowEquivalence[sport] === undefined) {
+      sports.forEach((sport) => {
+        if (
+          sportsRowEquivalence[sport] === undefined ||
+          sportsKeyEquivalence[sport] === undefined
+        ) {
           console.error(`${sport} is not defined`);
+          return {
+            activity: undefined,
+            distance: undefined,
+            time: undefined,
+            drop: undefined,
+          };
         }
+      });
+
+      const activity = sports.reduce((acc, sport, index) => {
         const sportActivityStr =
           document.querySelector(
             `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].activity}) > td:nth-child(2)`
