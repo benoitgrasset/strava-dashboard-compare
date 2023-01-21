@@ -229,6 +229,7 @@ const loginAndGetStats = async (fetchAthletes) => {
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 926 });
+  page.setDefaultNavigationTimeout(0);
   await page.goto(StravaURL);
 
   await page.type("#email", myEmail);
