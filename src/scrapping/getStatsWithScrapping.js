@@ -133,38 +133,56 @@ const getStatsWithScrapping = async (page, athletes) => {
       // entrainement: activité, temps, distance
 
       const sportsRowEquivalence = {
-        "Course à pied": { activity: 1, distance: 2, time: 3, drop: 4 },
-        Vélo: { activity: 1, distance: 2, time: 4, drop: 3 },
-        Natation: { activity: 1, distance: 2, time: 3 },
-        Entraînement: { activity: 1, distance: 3, time: 2 },
-        Randonnée: { activity: 1, distance: 2, time: 4, drop: 3 },
-        Marche: { activity: 1, distance: 2, time: 4, drop: 3 },
-        "Vélo électrique": { activity: 1, distance: 2, time: 4, drop: 3 },
-        "Sports nautiques": { activity: 1, distance: 3, time: 2 },
-        Raquettes: { activity: 1, distance: 2, time: 4, drop: 3 },
-        "Ski alpin": { activity: 1, distance: 2, time: 3 },
-        "Ski nordique": { activity: 1, distance: 2, time: 3, drop: 4 },
-      };
-
-      const sportsKeyEquivalence = {
-        "Course à pied": "running",
-        Vélo: "cycling",
-        Natation: "swimming",
-        Entraînement: "training",
-        Randonnée: "hiking",
-        Marche: "walking",
-        "Vélo électrique": "eCycling",
-        "Sports nautiques": "waterSport",
-        Raquettes: "snowshoes",
-        "Ski alpin": "ski",
-        "Ski nordique": "nordic_ski",
+        "Course à pied": {
+          name: "running",
+          activity: 1,
+          distance: 2,
+          time: 3,
+          drop: 4,
+        },
+        Vélo: { name: "cycling", activity: 1, distance: 2, time: 4, drop: 3 },
+        Natation: { name: "swimming", activity: 1, distance: 2, time: 3 },
+        Entraînement: { name: "training", activity: 1, distance: 3, time: 2 },
+        Randonnée: {
+          name: "hiking",
+          activity: 1,
+          distance: 2,
+          time: 4,
+          drop: 3,
+        },
+        Marche: { name: "walking", activity: 1, distance: 2, time: 4, drop: 3 },
+        "Vélo électrique": {
+          name: "eCycling",
+          activity: 1,
+          distance: 2,
+          time: 4,
+          drop: 3,
+        },
+        "Sports nautiques": {
+          name: "watersport",
+          activity: 1,
+          distance: 3,
+          time: 2,
+        },
+        Raquettes: {
+          name: "snowshoes",
+          activity: 1,
+          distance: 2,
+          time: 4,
+          drop: 3,
+        },
+        "Ski alpin": { name: "ski", activity: 1, distance: 2, time: 3 },
+        "Ski nordique": {
+          name: "nordic_ski",
+          activity: 1,
+          distance: 2,
+          time: 3,
+          drop: 4,
+        },
       };
 
       sports.forEach((sport) => {
-        if (
-          sportsRowEquivalence[sport] === undefined ||
-          sportsKeyEquivalence[sport] === undefined
-        ) {
+        if (sportsRowEquivalence[sport] === undefined) {
           console.error(`${sport} is not defined`);
           return {
             activity: undefined,
@@ -182,7 +200,7 @@ const getStatsWithScrapping = async (page, athletes) => {
           )?.innerText || "0";
         return {
           ...acc,
-          [sportsKeyEquivalence[sport]]: Number(sportActivityStr),
+          [sportsRowEquivalence[sport].name]: Number(sportActivityStr),
         };
       }, {});
 
@@ -193,7 +211,7 @@ const getStatsWithScrapping = async (page, athletes) => {
           )?.innerText || "0";
         return {
           ...acc,
-          [sportsKeyEquivalence[sport]]: formatDistance(sportDistanceStr),
+          [sportsRowEquivalence[sport].name]: formatDistance(sportDistanceStr),
         };
       }, {});
 
@@ -204,7 +222,7 @@ const getStatsWithScrapping = async (page, athletes) => {
           )?.innerText || "0";
         return {
           ...acc,
-          [sportsKeyEquivalence[sport]]: formatTime(sportTimeStr),
+          [sportsRowEquivalence[sport].name]: formatTime(sportTimeStr),
         };
       }, {});
 
@@ -217,7 +235,7 @@ const getStatsWithScrapping = async (page, athletes) => {
           "0";
         return {
           ...acc,
-          [sportsKeyEquivalence[sport]]: formatDistance(sportDropStr),
+          [sportsRowEquivalence[sport].name]: formatDistance(sportDropStr),
         };
       }, {});
 
