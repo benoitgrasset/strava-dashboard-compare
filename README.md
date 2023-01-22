@@ -10,7 +10,6 @@ Le fichier yml décrivant le workflow: [update-dashboard.yml](/.github/workflows
 
 Le dahboard est déployé avec `Netlify` sur l'url suivante: https://strava-dashboard-compare.netlify.app/
 
-
 ## cron
 
 ```
@@ -18,7 +17,6 @@ Le dahboard est déployé avec `Netlify` sur l'url suivante: https://strava-dash
 ```
 
 Pour tester crontab: [cron-guru](https://crontab.guru/#*_*_*_*_*)
-
 
 ## output file
 
