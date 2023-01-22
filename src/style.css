@@ -95,6 +95,12 @@ label:hover {
   margin: 0 6px;
 }
 
+@media (max-width: 800px) {
+  .bullet {
+    display: none;
+  }
+}
+
 .radioButtonsContainer {
   display: flex;
   flex-direction: column;
