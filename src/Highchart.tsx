@@ -195,6 +195,30 @@ const Highchart: React.FC = () => {
         enableMouseTracking: true,
       },
     },
+    credits: {
+      enabled: false,
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 800,
+          },
+          chartOptions: {
+            legend: {
+              enabled: false,
+            },
+            plotOptions: {
+              column: {
+                dataLabels: {
+                  enabled: false,
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
     series: [
       {
         name: "cycling",
