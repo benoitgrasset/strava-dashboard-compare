@@ -150,6 +150,9 @@ const Highchart: React.FC = () => {
             ? `<strong class="me">${ctx.value}</strong>`
             : `<span>${ctx.value}</span>`;
         },
+        style: {
+          opacity: 1,
+        },
       },
     },
     yAxis: {
