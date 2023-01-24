@@ -40,3 +40,7 @@ Pour tester crontab: [cron-guru](https://crontab.guru/#*_*_*_*_*)
     "drop": { "running": 1194, "cycling": 928, "hiking": 0 }
   }
 ```
+
+## Other repos example
+
+https://www.curtiscode.dev/post/project/displaying-strava-stats-using-webhooks/
