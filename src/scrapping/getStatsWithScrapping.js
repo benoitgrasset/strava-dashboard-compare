@@ -287,6 +287,6 @@ export const launchScrapping = async (fetchAthletes) => {
       writeJSON("stats.json", json);
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
