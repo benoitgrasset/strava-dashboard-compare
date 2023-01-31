@@ -179,6 +179,13 @@ const getStatsWithScrapping = async (page, athletes) => {
           time: 3,
           drop: 4,
         },
+        "Ski de randonnée": {
+          name: "hiking_ski",
+          activity: 1,
+          distance: 2,
+          time: 4,
+          drop: 3,
+        },
       };
 
       sports.forEach((sport) => {
