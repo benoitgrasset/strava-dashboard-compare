@@ -188,17 +188,11 @@ const getStatsWithScrapping = async (page, athletes) => {
         },
       };
 
-      sports.forEach((sport) => {
+      for (let sport of sports) {
         if (sportsRowEquivalence[sport] === undefined) {
-          console.error(`${sport} is not defined`);
-          return {
-            activity: undefined,
-            distance: undefined,
-            time: undefined,
-            drop: undefined,
-          };
+          throw new Error(`${sport} is not defined`);
         }
-      });
+      }
 
       const activity = sports.reduce((acc, sport, index) => {
         const sportActivityStr =
