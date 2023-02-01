@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
+import fs from "fs-extra";
 import puppeteer from "puppeteer";
 import { writeJSON } from "./utils.js";
-const fs = require("fs");
 
 const StravaURL = "https://www.strava.com/login/";
 
