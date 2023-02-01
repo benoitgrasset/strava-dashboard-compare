@@ -282,7 +282,8 @@ const loginAndGetStats = async (fetchAthletes) => {
 
 const FILENAME = "stats.json";
 const date = new Date();
-const suffix = `${date.getDate()}_${date.getMonth() + 1}`;
+const month = date.getMonth() + 1;
+const suffix = `${month}_${date.getDate()}`;
 const FILENAME_BACK = `stats_${suffix}.json`;
 const path = "src/data/";
 
