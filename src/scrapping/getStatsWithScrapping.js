@@ -282,7 +282,7 @@ const loginAndGetStats = async (fetchAthletes) => {
 
 const FILENAME = "stats.json";
 const FILENAME_BACK = "stats_back.json";
-const path = "../data/";
+const path = "src/data/";
 
 export const launchScrapping = async (fetchAthletes) => {
   await loginAndGetStats(fetchAthletes)
