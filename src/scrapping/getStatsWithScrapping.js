@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import puppeteer from "puppeteer";
 import { writeJSON } from "./utils.js";
+const fs = require("fs");
 
 const StravaURL = "https://www.strava.com/login/";
 
@@ -279,12 +280,20 @@ const loginAndGetStats = async (fetchAthletes) => {
   return stats;
 };
 
+const FILENAME = "stats.json";
+const FILENAME_BACK = "stats_back.json";
+
 export const launchScrapping = async (fetchAthletes) => {
   await loginAndGetStats(fetchAthletes)
     .then((res) => {
+      // backup prev results
+      fs.copyFile(FILENAME, FILENAME_BACK, (err) => {
+        if (err) throw err;
+        console.log(`${FILENAME} was copied to ${FILENAME_BACK}`);
+      });
       // save all stats to stats.json file
       const json = JSON.stringify(res);
-      writeJSON("stats.json", json);
+      writeJSON(FILENAME, json);
     })
     .catch((error) => {
       console.error(error);
