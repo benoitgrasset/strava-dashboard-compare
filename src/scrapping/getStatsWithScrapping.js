@@ -281,7 +281,9 @@ const loginAndGetStats = async (fetchAthletes) => {
 };
 
 const FILENAME = "stats.json";
-const FILENAME_BACK = "stats_back.json";
+const date = new Date();
+const suffix = `${date.getDate()}_${date.getMonth() + 1}`;
+const FILENAME_BACK = `stats_${suffix}.json`;
 const path = "src/data/";
 
 export const launchScrapping = async (fetchAthletes) => {
