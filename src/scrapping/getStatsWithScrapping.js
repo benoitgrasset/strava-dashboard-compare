@@ -282,12 +282,13 @@ const loginAndGetStats = async (fetchAthletes) => {
 
 const FILENAME = "stats.json";
 const FILENAME_BACK = "stats_back.json";
+const path = "../data/";
 
 export const launchScrapping = async (fetchAthletes) => {
   await loginAndGetStats(fetchAthletes)
     .then((res) => {
       // backup prev results
-      fs.copyFile(FILENAME, FILENAME_BACK, (err) => {
+      fs.copyFile(FILENAME, path + FILENAME_BACK, (err) => {
         if (err) throw err;
         console.log(`${FILENAME} was copied to ${FILENAME_BACK}`);
       });
