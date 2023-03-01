@@ -187,6 +187,7 @@ const getStatsWithScrapping = async (page, athletes) => {
           time: 4,
           drop: 3,
         },
+        Snowboard: { name: "snowboard", activity: 1, distance: 2, time: 3 },
       };
 
       for (let sport of sports) {
