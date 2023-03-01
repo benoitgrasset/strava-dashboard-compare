@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import fs from "fs-extra";
 import puppeteer from "puppeteer";
+import { sportsRowEquivalence } from "./sports";
 import { writeJSON } from "./utils.js";
 
 const StravaURL = "https://www.strava.com/login/";
@@ -127,68 +128,6 @@ const getStatsWithScrapping = async (page, athletes) => {
             .replace(/\s+/g, "") // remove white spaces
             .replace(/[a-zA-Z]+/g, "") // remove letters
         );
-
-      // running: activité, distance, temps, dénivelé
-      // cycling, randonnée: activité, distance, dénivelé, temps
-      // swimming: activité, distance, temps
-      // entrainement: activité, temps, distance
-
-      const sportsRowEquivalence = {
-        "Course à pied": {
-          name: "running",
-          activity: 1,
-          distance: 2,
-          time: 3,
-          drop: 4,
-        },
-        Vélo: { name: "cycling", activity: 1, distance: 2, time: 4, drop: 3 },
-        Natation: { name: "swimming", activity: 1, distance: 2, time: 3 },
-        Entraînement: { name: "training", activity: 1, distance: 3, time: 2 },
-        Randonnée: {
-          name: "hiking",
-          activity: 1,
-          distance: 2,
-          time: 4,
-          drop: 3,
-        },
-        Marche: { name: "walking", activity: 1, distance: 2, time: 4, drop: 3 },
-        "Vélo électrique": {
-          name: "eCycling",
-          activity: 1,
-          distance: 2,
-          time: 4,
-          drop: 3,
-        },
-        "Sports nautiques": {
-          name: "watersport",
-          activity: 1,
-          distance: 3,
-          time: 2,
-        },
-        Raquettes: {
-          name: "snowshoes",
-          activity: 1,
-          distance: 2,
-          time: 4,
-          drop: 3,
-        },
-        "Ski alpin": { name: "ski", activity: 1, distance: 2, time: 3 },
-        "Ski nordique": {
-          name: "nordic_ski",
-          activity: 1,
-          distance: 2,
-          time: 3,
-          drop: 4,
-        },
-        "Ski de randonnée": {
-          name: "hiking_ski",
-          activity: 1,
-          distance: 2,
-          time: 4,
-          drop: 3,
-        },
-        Snowboard: { name: "snowboard", activity: 1, distance: 2, time: 3 },
-      };
 
       for (let sport of sports) {
         if (sportsRowEquivalence[sport] === undefined) {
