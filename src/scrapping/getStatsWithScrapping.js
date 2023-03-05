@@ -104,90 +104,95 @@ const getStatsWithScrapping = async (page, athletes) => {
 
     // document variable is available within page.evaluate()
     // variable sports is not defined / accessible within evaluate()
-    const data = await page.evaluate(async (sports) => {
-      const roundNumber = (num) => Math.round(num * 10) / 10;
+    const data = await page.evaluate(
+      async (sports, sportsRowEquivalence) => {
+        const roundNumber = (num) => Math.round(num * 10) / 10;
 
-      const formatTime = (string) => {
-        const timeDigits = string
-          .split(/\D/)
-          .filter((e) => e)
-          .map((e) => Number(e));
-        if (string.includes("h")) {
-          // HOUR MIN ("7h 50min")
-          return roundNumber(timeDigits[0] + timeDigits[1] / 60);
-        } else {
-          // MIN SEC ("22min 27s")
-          return roundNumber(timeDigits[0] / 60);
+        const formatTime = (string) => {
+          const timeDigits = string
+            .split(/\D/)
+            .filter((e) => e)
+            .map((e) => Number(e));
+          if (string.includes("h")) {
+            // HOUR MIN ("7h 50min")
+            return roundNumber(timeDigits[0] + timeDigits[1] / 60);
+          } else {
+            // MIN SEC ("22min 27s")
+            return roundNumber(timeDigits[0] / 60);
+          }
+        };
+
+        const formatDistance = (str) =>
+          Number(
+            str
+              .replace(",", ".") // replace "," by "."
+              .replace(/\s+/g, "") // remove white spaces
+              .replace(/[a-zA-Z]+/g, "") // remove letters
+          );
+
+        for (let sport of sports) {
+          if (sportsRowEquivalence[sport] === undefined) {
+            throw new Error(`${sport} is not defined`);
+          }
         }
-      };
 
-      const formatDistance = (str) =>
-        Number(
-          str
-            .replace(",", ".") // replace "," by "."
-            .replace(/\s+/g, "") // remove white spaces
-            .replace(/[a-zA-Z]+/g, "") // remove letters
-        );
-
-      for (let sport of sports) {
-        if (sportsRowEquivalence[sport] === undefined) {
-          throw new Error(`${sport} is not defined`);
-        }
-      }
-
-      const activity = sports.reduce((acc, sport, index) => {
-        const sportActivityStr =
-          document.querySelector(
-            `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].activity}) > td:nth-child(2)`
-          )?.innerText || "0";
-        return {
-          ...acc,
-          [sportsRowEquivalence[sport].name]: Number(sportActivityStr),
-        };
-      }, {});
-
-      const distance = sports.reduce((acc, sport, index) => {
-        const sportDistanceStr =
-          document.querySelector(
-            `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].distance}) > td:nth-child(2)`
-          )?.innerText || "0";
-        return {
-          ...acc,
-          [sportsRowEquivalence[sport].name]: formatDistance(sportDistanceStr),
-        };
-      }, {});
-
-      const time = sports.reduce((acc, sport, index) => {
-        const sportTimeStr =
-          document.querySelector(
-            `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].time}) > td:nth-child(2)`
-          )?.innerText || "0";
-        return {
-          ...acc,
-          [sportsRowEquivalence[sport].name]: formatTime(sportTimeStr),
-        };
-      }, {});
-
-      const drop = sports.reduce((acc, sport, index) => {
-        const sportDropStr =
-          (sportsRowEquivalence[sport].drop &&
+        const activity = sports.reduce((acc, sport, index) => {
+          const sportActivityStr =
             document.querySelector(
-              `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].drop}) > td:nth-child(2)`
-            )?.innerText) ||
-          "0";
-        return {
-          ...acc,
-          [sportsRowEquivalence[sport].name]: formatDistance(sportDropStr),
-        };
-      }, {});
+              `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].activity}) > td:nth-child(2)`
+            )?.innerText || "0";
+          return {
+            ...acc,
+            [sportsRowEquivalence[sport].name]: Number(sportActivityStr),
+          };
+        }, {});
 
-      return {
-        activity,
-        distance,
-        time,
-        drop,
-      };
-    }, sports);
+        const distance = sports.reduce((acc, sport, index) => {
+          const sportDistanceStr =
+            document.querySelector(
+              `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].distance}) > td:nth-child(2)`
+            )?.innerText || "0";
+          return {
+            ...acc,
+            [sportsRowEquivalence[sport].name]:
+              formatDistance(sportDistanceStr),
+          };
+        }, {});
+
+        const time = sports.reduce((acc, sport, index) => {
+          const sportTimeStr =
+            document.querySelector(
+              `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].time}) > td:nth-child(2)`
+            )?.innerText || "0";
+          return {
+            ...acc,
+            [sportsRowEquivalence[sport].name]: formatTime(sportTimeStr),
+          };
+        }, {});
+
+        const drop = sports.reduce((acc, sport, index) => {
+          const sportDropStr =
+            (sportsRowEquivalence[sport].drop &&
+              document.querySelector(
+                `div.sport-${index} > table > tbody#sport-${index}-ytd > tr:nth-child(${sportsRowEquivalence[sport].drop}) > td:nth-child(2)`
+              )?.innerText) ||
+            "0";
+          return {
+            ...acc,
+            [sportsRowEquivalence[sport].name]: formatDistance(sportDropStr),
+          };
+        }, {});
+
+        return {
+          activity,
+          distance,
+          time,
+          drop,
+        };
+      },
+      sports,
+      sportsRowEquivalence
+    );
     console.log({ name, id: Number(id), ...data });
     stats.push({ name, id: Number(id), ...data });
   }
