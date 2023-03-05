@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import fs from "fs-extra";
 import puppeteer from "puppeteer";
-import { sportsRowEquivalence } from "./sports";
+import { sportsRowEquivalence } from "./sports.js";
 import { writeJSON } from "./utils.js";
 
 const StravaURL = "https://www.strava.com/login/";
