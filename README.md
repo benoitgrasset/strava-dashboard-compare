@@ -18,6 +18,37 @@ Le dahboard est déployé avec `Netlify` sur l'url suivante: https://strava-dash
 
 Pour tester crontab: [cron-guru](https://crontab.guru/#*_*_*_*_*)
 
+### Launch scrapping
+
+create a `.env file` based on [.env.sample](./.env.sample) with this informations:
+
+```
+ID='36655238'
+NAME='Jan FRODENO'
+EMAIL='xxxxxxxxxx@gmail.com'
+PASSWORD='XXXXXXXX'
+```
+
+[nodejs](https://nodejs.org/en/download/)
+
+```
+install nodejs
+clone the repo
+cd project && npm install
+node .\getStatsWithScrapping.js
+
+cd back
+npm run server
+npm start
+click on "Scrap data from Strava" button
+```
+
+Use [concurrently](https://github.com/open-cli-tools/concurrently) to launch back and front server at the same time
+
+Wait for 7 minuts (4s per athlete)
+
+**!! close and restart server to see updated results**
+
 ## output file
 
 [stats.json](./stats.json)
